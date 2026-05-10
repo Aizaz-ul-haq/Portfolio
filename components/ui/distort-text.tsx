@@ -286,7 +286,7 @@ export function DistortText({
 
   return (
     <Tag
-      ref={ref as React.RefObject<HTMLElement>}
+      ref={ref as React.Ref<HTMLElement> as React.Ref<HTMLDivElement>}
       className={className}
       style={{ display: "inline-block" }}
     >
