@@ -1,0 +1,412 @@
+@import "tailwindcss";
+
+@theme {
+  /* BVB palette: yellow ground, deep black ink */
+  --color-void: #0a0a0a;
+  --color-ink: #0a0a0a;
+  --color-ink-70: rgba(10, 10, 10, 0.72);
+  --color-ink-50: rgba(10, 10, 10, 0.55);
+  --color-ink-30: rgba(10, 10, 10, 0.32);
+  --color-ink-15: rgba(10, 10, 10, 0.15);
+  --color-ink-08: rgba(10, 10, 10, 0.08);
+  --color-paper: #fde100;
+  --color-paper-deep: #f5d600;
+  --color-accent: #0a0a0a;
+  --color-accent-15: rgba(10, 10, 10, 0.15);
+  --color-accent-33: rgba(10, 10, 10, 0.33);
+
+  --font-display: var(--font-display);
+  --font-mono: var(--font-mono);
+
+  --ease-out-expo: cubic-bezier(0.16, 1, 0.3, 1);
+  --ease-in-out-expo: cubic-bezier(0.87, 0, 0.13, 1);
+  --ease-out-quart: cubic-bezier(0.25, 1, 0.5, 1);
+
+  --rad-pill: 999px;
+  --rad-sm: 4px;
+}
+
+:root {
+  color-scheme: light;
+}
+
+* {
+  box-sizing: border-box;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+html,
+body {
+  margin: 0;
+  padding: 0;
+  color: var(--color-ink);
+  font-family: var(--font-display), ui-sans-serif, system-ui, sans-serif;
+  text-rendering: optimizeLegibility;
+}
+
+html {
+  background: var(--color-paper);
+}
+
+body {
+  overflow-x: hidden;
+  min-height: 100vh;
+  position: relative;
+  background: var(--color-paper);
+}
+
+::selection {
+  background: var(--color-ink);
+  color: var(--color-paper);
+}
+
+/* Hide native cursor when our custom cursor is active (desktop only) */
+@media (hover: hover) and (pointer: fine) {
+  html,
+  body,
+  a,
+  button,
+  [data-cursor],
+  [tabindex] {
+    cursor: none;
+  }
+}
+
+a:focus-visible,
+button:focus-visible,
+[tabindex]:focus-visible {
+  outline: 2px solid var(--color-ink);
+  outline-offset: 4px;
+  border-radius: 2px;
+}
+
+img,
+video,
+canvas {
+  max-width: 100%;
+  display: block;
+}
+
+/* Lenis required CSS */
+html.lenis,
+html.lenis body {
+  height: auto;
+}
+.lenis.lenis-smooth {
+  scroll-behavior: auto !important;
+}
+.lenis.lenis-smooth [data-lenis-prevent] {
+  overscroll-behavior: contain;
+}
+.lenis.lenis-stopped {
+  overflow: hidden;
+}
+.lenis.lenis-smooth iframe {
+  pointer-events: none;
+}
+
+.font-display {
+  font-family: var(--font-display), ui-sans-serif, system-ui, sans-serif;
+}
+.font-mono {
+  font-family: var(--font-mono), ui-monospace, "SF Mono", Menlo, monospace;
+  font-feature-settings: "ss02";
+}
+
+/* "label" type — small, mono, generous tracking, ALL CAPS */
+.label {
+  font-family: var(--font-mono), ui-monospace, monospace;
+  text-transform: uppercase;
+  font-size: 0.6875rem;
+  letter-spacing: 0.18em;
+  font-weight: 500;
+  line-height: 1;
+  color: var(--color-ink-70);
+}
+
+.label-strong {
+  font-family: var(--font-mono), ui-monospace, monospace;
+  text-transform: uppercase;
+  font-size: 0.6875rem;
+  letter-spacing: 0.18em;
+  font-weight: 700;
+  line-height: 1;
+  color: var(--color-ink);
+}
+
+/* Display sizes — bold, dense, BVB poster aesthetic */
+.display-1 {
+  font-family: var(--font-display), ui-sans-serif, system-ui, sans-serif;
+  font-size: clamp(4rem, 16vw, 22rem);
+  line-height: 0.82;
+  letter-spacing: -0.05em;
+  font-weight: 800;
+  color: var(--color-ink);
+}
+.display-2 {
+  font-family: var(--font-display), ui-sans-serif, system-ui, sans-serif;
+  font-size: clamp(2.75rem, 9vw, 12rem);
+  line-height: 0.86;
+  letter-spacing: -0.04em;
+  font-weight: 800;
+  color: var(--color-ink);
+}
+.display-3 {
+  font-family: var(--font-display), ui-sans-serif, system-ui, sans-serif;
+  font-size: clamp(2rem, 5.5vw, 6rem);
+  line-height: 0.92;
+  letter-spacing: -0.035em;
+  font-weight: 700;
+  color: var(--color-ink);
+}
+.display-4 {
+  font-family: var(--font-display), ui-sans-serif, system-ui, sans-serif;
+  font-size: clamp(1.25rem, 2.4vw, 2.25rem);
+  line-height: 1.05;
+  letter-spacing: -0.02em;
+  font-weight: 600;
+  color: var(--color-ink);
+}
+
+/* Pill button — black on yellow */
+.pill {
+  border-radius: var(--rad-pill);
+  border: 1.5px solid var(--color-ink);
+  padding: 0.875rem 1.5rem;
+  font-family: var(--font-mono), ui-monospace, monospace;
+  text-transform: uppercase;
+  font-size: 0.6875rem;
+  letter-spacing: 0.18em;
+  font-weight: 700;
+  color: var(--color-ink);
+  background: transparent;
+  transition:
+    background 0.35s var(--ease-out-quart),
+    color 0.35s var(--ease-out-quart);
+  display: inline-flex;
+  align-items: center;
+  gap: 0.625rem;
+  line-height: 1;
+  cursor: pointer;
+}
+.pill:hover {
+  background: var(--color-ink);
+  color: var(--color-paper);
+}
+.pill-solid {
+  background: var(--color-ink);
+  color: var(--color-paper);
+}
+.pill-solid:hover {
+  background: var(--color-paper);
+  color: var(--color-ink);
+}
+
+/* Reveal mask — split-text inner */
+.split-line {
+  display: inline-block;
+  overflow: hidden;
+  vertical-align: top;
+  line-height: inherit;
+}
+.split-line > .split-inner {
+  display: inline-block;
+  will-change: transform;
+}
+.char-line {
+  display: inline-block;
+  overflow: hidden;
+  vertical-align: top;
+  line-height: 1;
+}
+.char-line > .char-inner {
+  display: inline-block;
+  will-change: transform;
+}
+
+/* Hairline divider used everywhere — now black on yellow */
+.hairline {
+  border-top: 1.5px solid var(--color-ink);
+}
+.hairline-l {
+  border-left: 1.5px solid var(--color-ink);
+}
+
+/* ===== MARQUEE =====
+ * Infinite horizontal ticker. Two identical tracks side-by-side
+ * translated -50% so it loops seamlessly.
+ */
+.marquee {
+  display: flex;
+  width: 100%;
+  overflow: hidden;
+  user-select: none;
+  white-space: nowrap;
+  -webkit-mask-image: linear-gradient(
+    to right,
+    transparent 0,
+    #000 6%,
+    #000 94%,
+    transparent 100%
+  );
+  mask-image: linear-gradient(
+    to right,
+    transparent 0,
+    #000 6%,
+    #000 94%,
+    transparent 100%
+  );
+}
+.marquee-track {
+  display: inline-flex;
+  align-items: center;
+  flex-shrink: 0;
+  min-width: 100%;
+  gap: 4rem;
+  padding-right: 4rem;
+  animation: marquee-x var(--marquee-duration, 40s) linear infinite;
+}
+.marquee:hover .marquee-track {
+  animation-play-state: paused;
+}
+.marquee-reverse .marquee-track {
+  animation-direction: reverse;
+}
+@keyframes marquee-x {
+  from {
+    transform: translateX(0);
+  }
+  to {
+    transform: translateX(-100%);
+  }
+}
+
+/* Vertical floating dot used between marquee items */
+.marquee-dot {
+  width: 7px;
+  height: 7px;
+  border-radius: 999px;
+  background: var(--color-ink);
+  flex-shrink: 0;
+}
+
+/* ===== VERTICAL MARQUEE ===== */
+.marquee-y {
+  display: flex;
+  flex-direction: column;
+  height: 100%;
+  overflow: hidden;
+  user-select: none;
+  -webkit-mask-image: linear-gradient(
+    to bottom,
+    transparent 0,
+    #000 8%,
+    #000 92%,
+    transparent 100%
+  );
+  mask-image: linear-gradient(
+    to bottom,
+    transparent 0,
+    #000 8%,
+    #000 92%,
+    transparent 100%
+  );
+}
+.marquee-y-track {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  flex-shrink: 0;
+  min-height: 100%;
+  gap: 2.5rem;
+  padding-bottom: 2.5rem;
+  animation: marquee-y var(--marquee-duration, 40s) linear infinite;
+}
+.marquee-y:hover .marquee-y-track {
+  animation-play-state: paused;
+}
+.marquee-y-reverse .marquee-y-track {
+  animation-direction: reverse;
+}
+@keyframes marquee-y {
+  from {
+    transform: translateY(0);
+  }
+  to {
+    transform: translateY(-100%);
+  }
+}
+
+/* ===== COUNTER =====
+ * Pure CSS odometer-ish using a translateY on a column.
+ * For numbers, content is rendered as inline-block tabular nums.
+ */
+.tabular {
+  font-variant-numeric: tabular-nums;
+  font-feature-settings: "tnum";
+}
+
+/* Subtle baseline blink for "live" indicators */
+.live-dot {
+  width: 7px;
+  height: 7px;
+  border-radius: 999px;
+  background: var(--color-ink);
+  animation: pulse-dot 2.4s ease-in-out infinite;
+}
+@keyframes pulse-dot {
+  0%,
+  100% {
+    opacity: 0.4;
+    transform: scale(1);
+  }
+  50% {
+    opacity: 1;
+    transform: scale(1.15);
+  }
+}
+
+/* Slow continuous float for accent bits */
+@keyframes drift-y {
+  0%,
+  100% {
+    transform: translateY(0);
+  }
+  50% {
+    transform: translateY(-6px);
+  }
+}
+.drift {
+  animation: drift-y 6s ease-in-out infinite;
+}
+
+/* Continuous rotation for circular badges */
+@keyframes spin-circle {
+  from {
+    transform: rotate(0deg);
+  }
+  to {
+    transform: rotate(360deg);
+  }
+}
+
+/* Reduced motion */
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+    scroll-behavior: auto !important;
+  }
+}
+
+/* Hide native scrollbar (we have our own progress) */
+html {
+  scrollbar-width: none;
+}
+html::-webkit-scrollbar {
+  display: none;
+}
